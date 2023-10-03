@@ -1,0 +1,81 @@
+CS31 Project 1 
+Kyle Johnson ID: 806169970
+
+Output Report
+
+Step 5; Nonsensical, Unusual, or Incorrect outputs:
+
+Issue 1:
+    Inputs: 
+    -How many people were surveyed? 100 
+    -How many of them prefer basmati rice over jasmine rice? 50
+    -How many of them prefer jasmine rice over basmati rice? 50
+    Outputs:
+    -50.0% prefer basmati rice over jasmine rice.
+    -50.0% prefer jasmine rice over basmati rice.
+    -More people prefer jasmine rice over basmati rice.
+    Issue:
+    Even though there is an equal proportion of people who prefer basmati and jasmine rice, the program outputs that jasmine rice is
+    the favorite. It should say there is no clear favorite type of rice. This is caused by the conditional statements starting at 
+    line 30 failing to account for equal odds. 
+Issue 2:
+    Inputs:
+    -How many people were surveyed? 10 
+    -How many of them prefer basmati rice over jasmine rice? 5
+    -How many of them prefer jasmine rice over basmati rice? 6
+    Outputs:
+    -50.0% prefer basmati rice over jasmine rice.
+    -60.0% prefer jasmine rice over basmati rice.
+    -More people prefer jasmine rice over basmati rice.
+    Issue:
+    The number of votes for basmati and jasmine rice do note equal the input for the number of people surveyed. Because of this the 
+    percentages are also wrong for percent of people who prefer each type of rice. This is caused by using numberSurveyed as the
+    divisor in the percentage calculations instead of the sum of basmati and jasmine rice voters. (preferBasmati + preferJasmine) 
+Issue 3:
+    Inputs:
+    -How many people were surveyed? 10000
+    -How many of them prefer basmati rice over jasmine rice? 95
+    -How many of them prefer jasmine rice over basmati rice? 9905
+    Outputs:
+    -0.9% prefer basmati rice over jasmine rice.
+    -99.0% prefer jasmine rice over basmati rice.
+    -More people prefer jasmine rice over basmati rice.
+    Issue:
+    Because the code limits the specificity of the percentages, there is a precision error on the voting percents and the 
+    percentages do not add to 100%. It seems this error is caused by line 24, which truncates the double rather than rounding.  
+
+------------------------------------------------------------------------------------------------------------------------------
+                                                    OTHER POSSIBILITIES
+                                                    -Negative votes
+                                                    -0 surveyed Nan
+                                                    -int overflow error for votes
+------------------------------------------------------------------------------------------------------------------------------
+Step 6:
+Logic Error Explanation:
+    In logic_error.cpp I swapped the > sign on line 30 with a < sign. This causes the program to output the incorrect favorite
+    type of rice. In the example below, 7 voters prefer jasmine and 3 prefer basmati rice, but the code incorrectly outputs
+    basmati rice to be the favorite. 
+    Example: 
+        Inputs:
+        -How many people were surveyed? 10
+        -How many of them prefer basmati rice over jasmine rice? 3
+        -How many of them prefer jasmine rice over basmati rice? 7
+        Outputs:
+        -30.0% prefer basmati rice over jasmine rice.
+        -70.0% prefer jasmine rice over basmati rice.
+        -More people prefer basmati rice over jasmine rice.
+Step 7:
+Error 1:
+    Explanation: 
+        I removed line 5 which said using namespace std; Because of this every instance we used cout, endl or cin failed to compile.
+        Apart from replacing the deleted line, this could be fixed by typing std:: before each instance of cout, endl or cin. It
+        also caused line 22 to have an error because ios::fixed uses namespace std as well. Fixed version would be std::ios::fixed
+    Output Message:
+        use of undeclared identifier 'cout'; did you mean 'std::cout'?
+            cout << "How many people were surveyed? ";
+Error 2:
+    Explanation:
+        On line 26 I swapped one of the insertion operators (<<) with an extraction operator (>>) causing the cout line to not compile. 
+    Error Message:
+        invalid operands to binary expression ('std::ostream' (aka 'basic_ostream<char>') and 'double')
+            cout >> pctBasmati << "% prefer basmati rice over jasmine rice." << endl;
