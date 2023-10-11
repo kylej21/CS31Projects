@@ -1,0 +1,25 @@
+Kyle Johnson CS31
+
+Project 2 write up
+
+Notable Obstacles:
+1 - The first obstacle that caused me issues was using cin >> when trying to input a string value. I did not read the 
+    write up about strings before beginning the assignment so I did not realize right away that using cin instead of 
+    getline() is prone to whitespace errors. Then I did not know how to strip the \n from the input so it kept auto 
+    filling location to be ---. 
+2 - I tried to use cout.precision(3) without cout.setf(ios::fixed) and this was causing my decimals to be incorrect
+    because when it ended with a 0 it removed it. It also was not giving me the correct number of decimals at times.
+
+Test Data List:
+1- given test case #1 ("MacLeod House & Lodge", 155.4, "Scotland")
+2- given test case #2 ("National Doral Miami", 137, "florida")
+3- invalid Identification ("",N/A,N/A) <-- ends early because code exits therefore N/A;
+4- 0 Overstated Evalutation ("Hollywood House", 0, N/A) <-- ends early therefore N/A 
+5- negative Overstated Evaluation ("Hollywood House", -50, N/A) <-- ends early therefore N/a
+6- invalid location ("Hollywood House", 150, "")
+7- Less than 50 mil evaluation ("Kyles House", 45, "California")
+8- Less than 150 greater than 50 in ny ("Kyles House", 90, "new york")
+9- Less than 150 greater than 50 in florida ("Kyles House", 90, "florida")
+10- Less than 150 greater than 50 not in ny or florida ("Kyles House", 90, "California")
+11- Greater than 150 in ny or florida ("Kyles House", 180, "new york")
+12- Greater than 150 not in ny or florida ("Kyles House", 180, "California")

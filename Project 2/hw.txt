@@ -1,0 +1,17 @@
+Kyle Johnson CS31 
+
+HW Assignment for Project 2.
+
+Manual Code Reading.
+
+1.  Code - string grendel = "endl";
+	      cout << "endl";
+	      cout << grendel;
+	      cout << endl;
+	      cout << "grendel";
+    Expected Output:
+        endl
+        endl
+
+        grendel
+2. 
