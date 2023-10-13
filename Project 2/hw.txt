@@ -10,8 +10,39 @@ Manual Code Reading.
 	      cout << endl;
 	      cout << "grendel";
     Expected Output:
-        endl
-        endl
-
+        endlendl
         grendel
-2. 
+2. What does this code print out? - It prints a staircase of hashtags with 'side' number of steps
+
+3. 
+    #include<iostream>
+    using namespace std;
+    int main(){
+
+        int side;
+        cout<< "Enter a number: ";
+        cin >> side;
+        for(int i=0; i<side; i++){
+            int j=i;
+            while (j>=0){
+            
+                cout<<"#";
+            
+                j=j-1;
+            }
+            cout << "\n";
+        }
+    }
+4. 
+    switch(input){
+    case(281):
+        cout<< "bigamy";
+    case(321 || 322):
+        cout<<"selling illegal lottery tickets";
+    case(383):
+        cout<<"selling rancid butter";
+    case(598):
+        cout<<"injuring a bird in a public cemetery";
+    default:
+        cout<<"some other crime";
+}

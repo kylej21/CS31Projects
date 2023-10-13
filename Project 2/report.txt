@@ -23,3 +23,5 @@ Test Data List:
 10- Less than 150 greater than 50 not in ny or florida ("Kyles House", 90, "California")
 11- Greater than 150 in ny or florida ("Kyles House", 180, "new york")
 12- Greater than 150 not in ny or florida ("Kyles House", 180, "California")
+13- Exactly 50 mil evaluation("Kyles House", 50, "California")
+14- Exactly 150 mil evaluation("Kyles House", 50, "California")
