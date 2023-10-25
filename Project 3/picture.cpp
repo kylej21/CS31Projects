@@ -14,24 +14,38 @@ char currentChar = '*';
 int currentMode = FG;
 
 bool plotLine(int r, int c, int distance, int dir, char plotChar, int fgbg){
+    
+    //first if statements filter out invalid plotLine calls
+
+    //if direction is not HORIZ or VERT it is invalid
     if(dir!=0 && dir!=1){
         return false;
     }
+    //if the foreground/background value is not 0 or 1 it is invalid
     if(fgbg !=0 && fgbg!=1){
         return false;
     }
+    //if plotChar is not printable it is invalid
     if(!isprint(plotChar)){
         return false;
     }   
+    //if the line is meant to be plotted outside of the grid, it is invalid
     if(r > getRows() || c>getCols()){
         return false;
     }
+    
+
+    //computes code for horizontal lines
+    
     if(dir == HORIZ){
+        //checks if the final line endpoint would be out of bounds
         if(c+distance < 1 || c+distance > getCols()){
             return false;
         }
         else{
+            //handles positive lines going forwards
             if(distance>0){
+                //loop from starting column to start + distance since start + distance = end
                 for(int i =c; i<= c+distance;i++){
                     if(getChar(r,i)==' '){
                         setChar(r,i,plotChar);
@@ -41,6 +55,7 @@ bool plotLine(int r, int c, int distance, int dir, char plotChar, int fgbg){
                     }
                 }
             }
+            //handles negative lines going backwards -- comments the same as above except loops back instead of forwards
             else if(distance <0){
                 for(int i =c; i>= c+distance;i--){
                     if(getChar(r,i)==' '){
@@ -51,14 +66,16 @@ bool plotLine(int r, int c, int distance, int dir, char plotChar, int fgbg){
                     }
                 }
             }
+            //if distance = 0 then it is a singular point I plot. 
             else{
-                if(fgbg==FG){
+                if(fgbg==FG || getChar(r,c)==' '){
                     setChar(r,c,plotChar);
                 }
             }
         }
         return true;
     }
+    // computes code for vertical lines -- comments same as horizontal lines but uses rows instead of columns.
     else{
         if(r+distance < 1 || r+distance > getRows()){
             return false;
@@ -116,6 +133,7 @@ int performCommands(string commandString, char& plotChar, int& mode, int& badPos
     int i =0;
     while(i<commandString.size()){
         distance=0;
+            //if I is the last character in the string and is not C or c then it requires preceding characters and is therefore invalid
             if(i==commandString.size()-1){
                 if(!(commandString[i]=='c') && !(commandString[i]=='C')){
                     badPos = commandString.size();
@@ -123,6 +141,9 @@ int performCommands(string commandString, char& plotChar, int& mode, int& badPos
                 }
             }
             char temp = commandString[i];
+            
+            //switch statement to keep track of the 5 different commands: H, V, C, B, F. Also check lowercases.
+            
             switch(temp){
                
     // -------------------------------------- H CASES --------------------------------------------------       
@@ -146,11 +167,18 @@ int performCommands(string commandString, char& plotChar, int& mode, int& badPos
                         
                         if(i+3 <commandString.size()){
                             if(isdigit(commandString[i+2]) && isdigit(commandString[i+3])){
+                                
+                                //since the first digit represents the tens place I mult by ten. Then add by the second digit.
+                                //E.x 67 = 6*10 +7
+                                
                                 distance = (commandString[i+2]-'0')*10;
                                 distance += commandString[i+3]-'0';
                                 distance = distance * -1;
+                                //since plotline returns T/F based on success, I can use it in an if to determine if their is a type 3 error
                                 if(plotLine(r,c,distance,0,plotChar,mode)){
+                                    //update coordinates
                                     c = c+ distance;
+                                    //iterate by 4. 1 for the minus, 2 for the double digits, and a 4th to get to the new char. 
                                     i+=4;
                                 }
                                 else{
@@ -158,7 +186,10 @@ int performCommands(string commandString, char& plotChar, int& mode, int& badPos
                                     return 3;
                                 }
                             }
+                            //since this if statement is i+3< size I need to also have a conditional for on e digit negative.
+                            //if I reorganized code I wouldnt need this. Redundant because it reappears right below this segment.
                             else if(isdigit(commandString[i+2])){
+                                //since one digit no *10.
                                 distance = commandString[i+2]-'0';
                                 distance = distance*-1;
                                 if(plotLine(r,c,distance,0,plotChar,mode)){
@@ -172,7 +203,8 @@ int performCommands(string commandString, char& plotChar, int& mode, int& badPos
                             }
                         
                         } 
-                        //this if checks
+                        //this if checks for single digit negatives. Repeat of above but need it outside the i+3 check in case it is last
+                        //two chars in the string. Comments are the same.
                         else if(i+2<commandString.size()){
                             if(isdigit(commandString[i+2])){
                                 distance = commandString[i+2]-'0';
@@ -192,7 +224,8 @@ int performCommands(string commandString, char& plotChar, int& mode, int& badPos
                                 return 1;
                             }
                     }
-                        
+                    //this conditional checks for two digit positive lines. Same comments as before only difference is 
+                    //distance is not multiplied by -1  
                     else if(i+2<commandString.size()){   
                         if(isdigit(commandString[i+1]) && isdigit(commandString[i+2])){
                             distance = (commandString[i+1]-'0')*10;
@@ -206,6 +239,7 @@ int performCommands(string commandString, char& plotChar, int& mode, int& badPos
                                 return 3;
                             }
                         }
+                        //this conditional echecks for 1 digit positive lines.
                         else if(isdigit(commandString[i+1])){
                             distance = commandString[i+1]-'0';
                             if(plotLine(r,c,distance,0,plotChar,mode)){
@@ -219,6 +253,7 @@ int performCommands(string commandString, char& plotChar, int& mode, int& badPos
                                 }
                         }
                     }
+                    //checks for 1 digit positive lines at the very end of string that would have failed if i+2<commandString.size
                     else if(isdigit(commandString[i+1])){
                             distance = commandString[i+1]-'0';
                             if(plotLine(r,c,distance,0,plotChar,mode)){
