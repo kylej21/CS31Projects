@@ -115,7 +115,6 @@ bool plotLine(int r, int c, int distance, int dir, char plotChar, int fgbg){
 
 int performCommands(string commandString, char& plotChar, int& mode, int& badPos){
     
-    int type = 0; //0 represents command 1 represents the second part of a command
     int distance=0; // used to track the distance for how far the line will go
     int r=1;//r used to track current row
     int c=1;// c used to track current col

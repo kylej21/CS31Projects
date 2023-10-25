@@ -1,0 +1,18 @@
+Kyle Johnson CS31
+
+Project 3 write up
+
+Notable Obstacles:
+1 - I was trying to cast the digit after V or H to an int using int(). This was giving me the char value instead of the 
+    interger value because the parsed character was a string. I fixed this by subtracting - '0'. 
+2 - I have many nested if statements and if and of the conditionals were wrong I got trapped in an endless loop, 
+    since I iterate I inside the innermost if statements. 
+3 - I wrote if i+3 < commandString.size() to check for negatives and 2 digit numbers as a worst case, and for my else if 
+    I checked if i+2 < commandString.size(). The problem is i+2 and i+3 are often less than commandString.size so my if would
+    go to i+3 when it is intended to go through the i+2 channel. This was caused by poor planning of my conditional structure
+    and I fixed it by just repeating code and copying segments so it was fullproof. It really congests my code though.
+
+Design description (pseudocode):
+    
+
+Test cases:
