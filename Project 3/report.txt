@@ -14,5 +14,110 @@ Notable Obstacles:
 
 Design description (pseudocode):
     
+    declare plotline function w/ given params
+        if direction, foreground/background, initial point, or plotChar is invalid
+            return false
+        if horizontal
+            if final endpoint off the grid
+                return false
+            else
+                if line dist is positive
+                    loop from point c, r to point c+distance , r
+                        if foreground replace i,r with plotChar
+                        if background replace spaces at i,r with plotChar
+                else if line dist is negative (going backwards)
+                    loop backwards from c,r to c-distance,r
+                        if foreground replace i,r with plotChar
+                        if background replace spaces at i,r with plotChar
+                else
+                    plot single point if foreground
+                    replace only space if background
+            report successful function (true)
+        if vertical
+            if final endpoint off the grid
+                return false
+            else
+                if line dist is positive
+                    loop from point c, r to point c , r+distance
+                        if foreground replace c,i with plotChar
+                        if background replace spaces at c,i with plotChar
+                else if line dist is negative (going backwards)
+                    loop backwards from c,r to c,r-distance
+                        if foreground replace c,i with plotChar
+                        if background replace spaces at c,i with plotChar
+                else
+                    plot single point if foreground
+                    replace only space if background
+            report successful function (true)
+        
+    Declare perform commands with given params
+        check for invalid plotChar, BG/FG, and return 2 if invalid
+        while my spot tracker (i) is less than the commandstring size
+            if i is the last letter and not C or C
+                return 1 and set badPos to the size of string 
+            switch to whatever the corresponding char at i is
+                h/H:
+                    if h is the second to last letter and the last is not a digit return 1 and badpos to i+1
+                    if H followed by a '-'
+                        check if there are 2 chars past the '-'
+                            if the chars are both digits run plotline horizontally backwards with that length
+                            if not 2 more check 1 for single digit
+                                if the next one is a digit run plotline horizontally backwards with that length
+                                if the next one is not a digit return corresponding error message and badPos value
+                        check if there is 1 char past the -
+                            repeat checks and plotline calls from above conditional with corresponding lengths and values
+                        return 1 because - must be followed by a digit and badPos = the point after '-'
+                    if no '-'
+                        check if there are 2 chars past h/H
+                            if both are digits run plotline horizontally forwards 
+                            if only one more digit run plotline horizontally forwards or error message if not a digit
+                        check if single char past h/H exists
+                            runplotline if possible forwards with corresponding values otherwise output error message
+                        return 1 because the digit after H/h must be - or a digit
+                v/V:
+                    same as h/H but run plotline vertically instead
+                B/b:
+                    check for valid plotChar value and set it if its valid
+                    if not valid return error message 
+                f/F:
+                    same as B/b but set mode to foreground instead
+                c/C:
+                    call clearGrid to reset grid, set r,c to 1,1, plotChar to '*', mode to 0, and increment
+                default:
+                    not valid command char so return 1
+
+
 
 Test cases:
+    Using 30x30 grid:
+        1. H5 - check H plotline works
+        2. V5 - check V plotline works
+        3. v5 - check lowercase V works
+        4. h5 - check lowercase h works
+        5. FL - check F works
+        6. fL check lowercase F works
+        7. BL - check B works
+        8. bL - check lowercase B works
+        9. C - check C works
+        10. c - check lowercase c works
+        11. H-5 check H out of bounds works
+        12. H5FLH-3 check negative Hs work
+        13. V-5 check V out of bounds works
+        14. V5FLV-3 check negative Vs work
+        15. C12 - check non valid command chars
+        16. H2V3H99V2F    H3 - check non printable char and syntax priority over plotLine out of bounds
+        17. FH8 - check that code recognizes H is part of the first command not second
+        18. H0 - check plot single point edge case.
+        19. H25 H-10 - check invalid no spaces between commands
+        20. H25 - check double digit horizontal
+        21. V25 - check double digit vertical
+        22. HV8 - check for missing digits horizontal
+        23. VH8 - check for missing digits vertical
+        24. BXH5FLH-3 - check foreground works
+        25. F5H5BLH-3v2 - check background works
+        26. H29FLH-25 - check double digit horizontal negatives
+        27. V29FLH-25 - check double digit vertical negatives
+        28. H5V5H-3 - check horizontal single digit negatives at the end of string work (test case needed since I account for string length)
+        29. H25V5H-20 - check horitzontal double digit negatives at the end of string work
+        30. V5H5V-3 - check vertical single digit negatives work at end of string
+        31. V25H5V-20 - check vertical double digit negatives works at end of string

@@ -1,3 +1,5 @@
+//fix H2V3H99V2F    H3
+// make sure it returns 1 for syntax error since tab is invalid char.
 #include "grid.h"
 #include<iostream>
 #include<string>
@@ -118,7 +120,7 @@ int performCommands(string commandString, char& plotChar, int& mode, int& badPos
     int distance=0; // used to track the distance for how far the line will go
     int r=1;//r used to track current row
     int c=1;// c used to track current col
-    
+    int tempBad = -1;
     // if given plotChar is invalid return error type 2
     if(!isprint(plotChar)){
         return 2; 
@@ -135,14 +137,20 @@ int performCommands(string commandString, char& plotChar, int& mode, int& badPos
             //if I is the last character in the string and is not C or c then it requires preceding characters and is therefore invalid
             if(i==commandString.size()-1){
                 if(!(commandString[i]=='c') && !(commandString[i]=='C')){
+                    
+                    if(commandString[i]=='h'||commandString[i]=='H' || commandString[i]=='v' || commandString[i]=='V'){
                     badPos = commandString.size();
                     return 1;
+                    }
+                    else{
+                        badPos = commandString.size()-1;
+                        return 1;
+                    }
                 }
             }
             char temp = commandString[i];
             
             //switch statement to keep track of the 5 different commands: H, V, C, B, F. Also check lowercases.
-            
             switch(temp){
                
     // -------------------------------------- H CASES --------------------------------------------------       
@@ -163,7 +171,6 @@ int performCommands(string commandString, char& plotChar, int& mode, int& badPos
                     if(commandString[i+1]=='-'){
                         
                         // the following if is for negative double digit lengths. I first check for string out of bounds then calc.
-                        
                         if(i+3 <commandString.size()){
                             if(isdigit(commandString[i+2]) && isdigit(commandString[i+3])){
                                 
@@ -181,8 +188,10 @@ int performCommands(string commandString, char& plotChar, int& mode, int& badPos
                                     i+=4;
                                 }
                                 else{
-                                    badPos=i;
-                                    return 3;
+                                    if(tempBad==-1){
+                                        tempBad=i;
+                                        i+=4;
+                                    }
                                 }
                             }
                             //since this if statement is i+3< size I need to also have a conditional for on e digit negative.
@@ -196,9 +205,15 @@ int performCommands(string commandString, char& plotChar, int& mode, int& badPos
                                     i+=3;
                                 }
                                 else{
-                                    badPos=i;
-                                    return 3;
+                                    if(tempBad==-1){
+                                        tempBad=i;
+                                        i+=3;
+                                    }
                                 }
+                            }
+                            else{
+                                badPos=i+1;
+                                return 1;
                             }
                         
                         } 
@@ -213,14 +228,20 @@ int performCommands(string commandString, char& plotChar, int& mode, int& badPos
                                     i+=3;
                                 }
                                 else{
-                                    badPos=i;
-                                    return 3;
+                                    if(tempBad==-1){
+                                        tempBad=i;
+                                        i+=3;
+                                    }
                                 }
+                            }
+                            else{
+                                badPos=i+1;
+                                return 1;
                             }
                         }
                         else{
-                                badPos=i+2;
-                                return 1;
+                            badPos=i+2;
+                            return 1;
                             }
                     }
                     //this conditional checks for two digit positive lines. Same comments as before only difference is 
@@ -234,8 +255,10 @@ int performCommands(string commandString, char& plotChar, int& mode, int& badPos
                                 i+=3;
                             }
                             else{
-                                badPos=i;
-                                return 3;
+                                if(tempBad==-1){
+                                    tempBad=i;
+                                    i+=3;
+                                }
                             }
                         }
                         //this conditional echecks for 1 digit positive lines.
@@ -247,9 +270,15 @@ int performCommands(string commandString, char& plotChar, int& mode, int& badPos
 
                             }
                             else{
-                                badPos=i;
-                                return 3;
+                                if(tempBad==-1){
+                                    tempBad=i;
+                                    i+=2;
                                 }
+                            }
+                        }
+                        else{
+                            badPos=i+1;
+                            return 1;
                         }
                     }
                     //checks for 1 digit positive lines at the very end of string that would have failed if i+2<commandString.size
@@ -260,9 +289,11 @@ int performCommands(string commandString, char& plotChar, int& mode, int& badPos
                                 i+=2;
                             }
                             else{
-                                badPos=i;
-                                return 3;
+                                if(tempBad==-1){
+                                    tempBad=i;
+                                    i+=2;
                                 }
+                            }
                         }
                     else{
                         badPos=i+1;
@@ -292,8 +323,10 @@ int performCommands(string commandString, char& plotChar, int& mode, int& badPos
                                     i+=4;
                                 }
                                 else{
-                                    badPos=i;
-                                    return 3;
+                                    if(tempBad==-1){
+                                        tempBad=i;
+                                        i+=4;
+                                    }
                                 }
                             }
                             else if(isdigit(commandString[i+2])){
@@ -304,9 +337,16 @@ int performCommands(string commandString, char& plotChar, int& mode, int& badPos
                                     i+=3;
                                 }
                                 else{
-                                    badPos=i;
-                                    return 3;
+                                    if(tempBad==-1){
+                                        tempBad=i;
+                                        i+=3;
+                                    }
                                 }
+                            }
+                            else{
+                                badPos=i+1;
+                                return 1;
+
                             }
                         
                         } 
@@ -319,9 +359,15 @@ int performCommands(string commandString, char& plotChar, int& mode, int& badPos
                                     i+=3;
                                 }
                                 else{
-                                    badPos=i;
-                                    return 3;
+                                    if(tempBad==-1){
+                                        tempBad=i;
+                                        i+=3;
+                                    }
                                 }
+                            }
+                            else{
+                                badPos=i+2;
+                                return 1;
                             }
                         }
                         else{
@@ -339,8 +385,10 @@ int performCommands(string commandString, char& plotChar, int& mode, int& badPos
                                 i+=3;
                             }
                             else{
-                                badPos=i;
-                                return 3;
+                                if(tempBad==-1){
+                                    tempBad=i;
+                                    i+=3;
+                                }
                             }
                         }
                         else if(isdigit(commandString[i+1])){
@@ -351,9 +399,15 @@ int performCommands(string commandString, char& plotChar, int& mode, int& badPos
 
                             }
                             else{
-                                badPos=i;
-                                return 3;
+                                if(tempBad==-1){
+                                    tempBad=i;
+                                    i+=2;
                                 }
+                            }
+                        }
+                        else{
+                            badPos = i+1;
+                            return 1;
                         }
                     }
                     else if(isdigit(commandString[i+1])){
@@ -363,8 +417,10 @@ int performCommands(string commandString, char& plotChar, int& mode, int& badPos
                                 i+=2;
                             }
                             else{
-                                badPos=i;
-                                return 3;
+                                if(tempBad==-1){
+                                    tempBad=i;
+                                    i+=2;
+                                }
                                 }
                         }
                     else{
@@ -424,7 +480,12 @@ int performCommands(string commandString, char& plotChar, int& mode, int& badPos
                     return 1;
             }
     }
-    return 0;
+    if(tempBad==-1){
+        return 0;
+    }else{
+        badPos = tempBad;
+        return 3;
+    }
 };
 
 int main()
@@ -464,7 +525,7 @@ int main()
             break;
           case 2:
             if (!isprint(currentChar))
-                cout << "Current charaacter is not printable" << endl;
+                cout << "Current character is not printable" << endl;
             if (currentMode != FG  &&  currentMode != BG)
                 cout << "Current mode is " << currentMode << ", not FG or BG" << endl;
             break;
