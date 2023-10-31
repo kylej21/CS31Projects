@@ -5,5 +5,5 @@ Not to be used for copying or to solve anyone elses assignments.
 | Project  | Score |
 | -------- | ----- |
 |    1     |100/100|
-|    2     |  N/A  |
+|    2     |  100/100  |
 |    3     |  N/A  |
