@@ -1,0 +1,10 @@
+Kyle Johnson CS31
+
+Project 4 write up
+
+Notable Obstacles:
+    Not really any notable obstacles for this project. The hardest part was gettign accustomed to the string comparisons 
+    using > and < because it seems unnatural. The only function that didn't work first try was flip, since I tried to 
+    code it without using a temporary helper array, but I fixed it within minutes.
+
+Test cases:
