@@ -7,3 +7,9 @@ Not to be used for copying or to solve anyone elses assignments.
 |    1     |100/100|
 |    2     |  100/100  |
 |    3     |  N/A  |
+|    4     |  N/A  |
+
+| Exams | Score |
+|-------| ----- |
+| Midterm 1 | N/A | 
+ 
