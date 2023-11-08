@@ -3,8 +3,66 @@ Kyle Johnson CS31
 Project 4 write up
 
 Notable Obstacles:
-    Not really any notable obstacles for this project. The hardest part was gettign accustomed to the string comparisons 
+    Not really any notable obstacles for this project. The hardest part was getting accustomed to the string comparisons 
     using > and < because it seems unnatural. The only function that didn't work first try was flip, since I tried to 
-    code it without using a temporary helper array, but I fixed it within minutes.
+    code it without using a temporary helper array, but I fixed it without too much trouble.
 
-Test cases:
+Test cases per function:
+    1 - reduplicate:
+        a. reduplicate({"Kyle","Ale","Avi","Diego"},4) - Tests the basic functionality of reduplicate
+        b. reduplicate({"Kyle","Ale","Avi","Diego"},1) - Tests the n parameter to make sure it works properly
+        c. reduplicate({"Kyle","Ale","Avi","Diego"},-2) - Tests invalid n 
+    2 - locate:
+        a. locate({"Kyle","Ale","Avi","Diego"},4,"Ale") - Tests basic functionality of a successful cases
+        b. locate({"Kyle","Ale","Avi","Diego"},3,"Diego") - Tests to make sure out of bounds elements aren't accessed
+        c. locate({"Kyle","Ale","Avi","Diego"},2,"Kyle") - Tests when N is not the full string size
+        d. locate({"Kyle","Ale","Avi","Diego"},-2,"Diego") - Tests invalid n 
+        e. locate({"Kyle","Ale","Avi","Diego"},4,"DIEGO") - Tests that case matters
+        e. locate({"Kyle","Ale","Avi","Diego","Kyle"},5,"Kyle") - Tests that function returns the FIRST matching string
+    3 - locationOfMax:
+        a. locationOfMax({"donald","asa","ron","vivek","chris","nikki"},6) - Tests basic functionality of locationOfMax
+        b. locationOfMax({"donald","asa","ron","vivek","chris","nikki"},3) - Tests n parameter
+        c. locationOfMax({"donald","asa","ron","vivek","chris","nikki"},-2) - Tests invalid n 
+    4 - circleLeft:
+        a. circleLeft({"nikki","donald","asa","tim","ron"},5,1) - Tests basic functionality of circleLeft
+        b. circleLeft({"nikki","donald","asa","tim","ron"},3,1) - Tests n parameter of circleLeft
+        c. circleLeft({"nikki","donald","asa","tim","ron"},3,3) - Tests invalid pos param of circleLeft
+        d. circleLeft({"nikki","donald","asa","tim","ron"},-2,1) - Tests invalid N param of circleLeft
+    5 - enumerateRuns:
+        a. enumerateRuns({"chris","doug","tim","tim","vivek","vivek","vivek","tim","tim"},9) - tests basic functionality
+        b. enumerateRuns({"vivek","vivek","vivek"},3) - tests if run never ends
+        c. enumerateRuns({"chris","doug","tim","tim","vivek","vivek","vivek","tim","tim"},4) - tests n parameter
+        d. enumerateRuns({"chris","doug","tim","tim","vivek","vivek","vivek","tim","tim"},-2) - tests invalid n parameter
+    6 - flip:
+        a. flip({"donald","tim","","chris","nikki","donald"},4) - test basic even functionality
+        b. flip({"donald","tim","","chris","nikki","donald"},5) - tests basic odd functionality
+        c. flip({"donald","tim","","chris","nikki","donald"},-2) - tests invalid n
+    7 - locateDifference:
+        a. locateDifference({"donald","tim","","chris","nikki","donald"},6,{"donald","tim","donald","","chris"},5) - basic functionality when differnet
+        b. locateDifference({"donald","tim","","chris","nikki","donald"},2,{"donald","tim","donald","","chris"},1) - tests if equal lower n returned
+        c. locateDifference({"donald","tim","","chris","nikki","donald"},1,{"donald","tim","donald","","chris"},2) - tests if string[] 1 is lower n 
+        d. locateDifference({"donald","tim","","chris","nikki","donald"},-1,{"donald","tim","donald","","chris"},5) - tests invalid n1
+        e. locateDifference({"donald","tim","","chris","nikki","donald"},6,{"donald","tim","donald","","chris"},-1) - tests invalid n2
+        f. locateDifference({"donald","tim","","chris","nikki","donald"},6,{"kyle","diego","avi","ale"},4) - tests no similarity
+    8 - subsequence:
+        a. subsequence({"nikki","ron","tim","vivek","doug"},5,{"ron","tim","vivek"},3) - basic functionality
+        b. subsequence({"nikki","ron","tim","vivek","doug"},4,{"nikki","vivek"},2) - tests no existence of subsequence
+        c. subsequence({"nikki","ron","tim","vivek","doug"},5,{"ron","tim","vivek"},-1) - tests invalid n2
+        d. subsequence({"nikki","ron","tim","vivek","doug"},-1,{"ron","tim","vivek"},3) - tests invalid n1
+    9 - locateAny:
+        a. locateAny({"nikki","ron","tim","vivek","doug"},5,{"donald","doug","vivek","ron"},4) - basic functionality
+        b. locateAny({"nikki","ron","tim","vivek","doug"},5,{"nikki","doug","vivek","ron"},4) - basic functionality #2
+        c. locateAny({"nikki","ron","tim","vivek","doug"},5,{"donald","doug","vivek","ron"},3) - tests pos parameter
+        d. locateAny({"nikki","ron","tim","vivek","doug"},-1,{"donald","doug","vivek","ron"},4) - invalid n1
+        e. locateAny({"nikki","ron","tim","vivek","doug"},5,{"donald","doug","vivek","ron"},-2) - invalid n2
+        f. locateAny({"nikki","ron","tim","vivek","doug"},5,{"kyle","smallberg","avi","ale"},4) - tests no common elements
+    10 - divide:
+        a. divide({"donald","asa","ron","vivek","chris","nikki"},6,"doug") - tests basic functionality
+        b. divide({"ron","vivek","asa","tim"},4,"tim") - tests basic functionality #2
+        c. divide({"ron","vivek","asa","tim"},4,"zeke") - tests functionality when divider is not in array and is last
+        d. divide({"ron","vivek","asa","tim"},-2,"zeke") - tests invalid n
+        e. divide({"ron","vivek","byron","tim"},4,"asa") - tests if divide is < all array elements
+
+
+
+
