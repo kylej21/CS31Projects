@@ -11,5 +11,5 @@ Not to be used for copying or to solve anyone elses assignments.
 
 | Exams | Score |
 |-------| ----- |
-| Midterm 1 | N/A | 
+| Midterm 1 | 100/100 | 
  
