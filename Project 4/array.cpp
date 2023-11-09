@@ -74,6 +74,9 @@ int enumerateRuns(const string a[], int n){
     if(n<0){
         return -1;
     }
+    if(n==0){
+        return 0;
+    }
     string current=a[0];
     int consecs=1;
     for(int i=1;i<n;i++){
@@ -187,32 +190,53 @@ int divide(string a[], int n, string divider){
     return n;
 };
 
-int main()
-	{
-	    string h[7] = { "nikki", "ron", "asa", "vivek", "", "chris", "donald" };
-	    assert(locate(h, 7, "chris") == 5);
-	    assert(locate(h, 7, "asa") == 2);
-	    assert(locate(h, 2, "asa") == -1);
-	    assert(locationOfMax(h, 7) == 3);
-
-	    string g[4] = { "nikki", "ron", "chris", "tim" };
-	    assert(locateDifference(h, 4, g, 4) == 2);
-	    assert(circleLeft(g, 4, 1) == 1 && g[1] == "chris" && g[3] == "ron");
-
-	    string c[4] = { "ma", "can", "tu", "do" };
-	    assert(reduplicate(c, 4) == 4 && c[0] == "mama" && c[3] == "dodo");
-
-	    string e[4] = { "asa", "vivek", "", "chris" };
-	    assert(subsequence(h, 7, e, 4) == 2);
-
-	    string d[5] = { "ron", "ron", "ron", "chris", "chris" };
-	    assert(enumerateRuns(d, 5) == 2);
-	
-	    string f[3] = { "vivek", "asa", "tim" };
-	    assert(locateAny(h, 7, f, 3) == 2);
-	    assert(flip(f, 3) == 3 && f[0] == "tim" && f[2] == "vivek");
-	
-	    assert(divide(h, 7, "donald") == 3);
-	
-	    cout << "All tests succeeded" << endl;
-	}
+int main() {
+    string a[7] = { "a",    "b",    "d",    "",    "v",    "c",    "q"};
+    assert(reduplicate(a, 4) == 4 && a[0] == "aa" && a[3] == "");
+    assert(reduplicate(a, 0) ==  0);
+    assert(reduplicate(a, -3) ==  -1);
+    string b[7] = { "a",    "b",    "d",    "",    "v",    "c",    "q"};
+    assert(locate(b, 7, "c") == 5);
+    assert(locate(b, 7, "d") == 2);
+    assert(locate(b, 2, "d") == -1);
+    assert(locate(b, 1, "a") == 0);
+    string c[7] = { "a",    "b",    "d",    "",    "v",    "v",    "q"};
+    assert(locationOfMax(c, 7) == 4);
+    assert(locationOfMax(c, 0) == -1);
+    assert(locationOfMax(c, -4) == -1);
+    string d[7] = { "a",    "b",    "d",    "",    "v",    "c",    "q"};
+    assert(circleLeft(d, 4, 1) == 1 && d[1] == "d" && d[3] == "b");
+    assert(circleLeft(d, 7, 1) == 1 && d[1] == "" && d[6] == "d");
+    string e[7] = { "a",    "b",    "d",    "",    "v",    "c",    "q" };
+    assert(circleLeft(e, 7, 2) == 2 && e[2] == "" && e[5] == "q");
+    assert(circleLeft(e, 7, -1) ==  -1);
+    assert(circleLeft(e, 0, 0) ==  -1);
+    string f[7] = { "a",    "b",    "b",    "b",    "v",    "v",    "q" };
+    assert(enumerateRuns(f, 7) == 4);
+    string g[7] = { "a",    "a",    "a",    "a",    "a",    "a",    "a" };
+    assert(enumerateRuns(g, 7) == 1);
+    assert(enumerateRuns(g, 0) == 0);
+    assert(enumerateRuns(g, -1) == -1);
+    string h[7] = { "a",    "b",    "d",    "",    "v",    "c",    "q"};
+    assert(flip(h, 3) == 3 && h[0] == "d" && h[2] == "a");
+    assert(flip(h, 0) == 0);
+    assert(flip(h, -1) == -1);
+    string folks[6] = { "donald", "tim", "", "chris", "nikki", "donald" };
+    string group[5] = { "donald", "tim", "donald", "", "chris" };
+    int r = locateDifference(folks, 6, group, 5);
+    int s = locateDifference(folks, 2, group, 1);
+    string names[10] = { "nikki", "ron", "tim", "vivek", "doug" };
+    string names1[10] = { "ron", "tim", "vivek" };
+    int aa = subsequence(names, 5, names1, 3);
+    string names2[10] = { "nikki", "vivek" };
+    int bb = subsequence(names, 4, names2, 2);
+    string name[10] = { "nikki", "ron", "tim", "vivek", "doug" };
+    string set1[10] = { "donald", "doug", "vivek", "ron" };
+    int cc = locateAny(name, 5, set1, 4);
+    string set2[10] = { "chris", "asa" };
+    int dd = locateAny(name, 5, set2, 2);
+    string cand[6] = { "donald", "asa", "ron", "vivek", "chris", "nikki" };
+    int ee = divide(cand, 6, "doug");
+    string cand2[4] = { "ron", "vivek", "asa", "tim" };
+    int ff = divide(cand2, 4, "tim");
+}
