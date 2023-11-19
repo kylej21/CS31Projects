@@ -1,0 +1,119 @@
+Kyle Johnson CS31
+
+Project 5 write up
+
+Notable Obstacles:
+    There were a lot of notable obstacles for this project. The first issue arrived when I tried to outf a line that was shorter 
+    than the previous one. Since I did not move the \0 char in the cstring, the end of my new line had characters from the 
+    previous one. I fixed this with memset() function. Next, the approach I took was very convuluted and not full proof.
+    Since I look at each character one at a time and determine what to do, it became difficult to process punctutation.
+    I had no way to know whether the next char was a space or a normal character, so I did not know whether to include a
+    second space like the specs say. This caused me a lot of grief but I ultimately fixed it by writing rotateLeft and right 
+    functions. Lastly, it was very difficult to know how to process a period at the end of a line. Since I delete my lines
+    memory, I usually put a period and a space at the end of a line. However, when the next line starts processing it has no
+    idea whether the sequence of characters were a punctutation or not, so it would not repeat a space. That mean my word 
+    segment that ended in punctuation had a single space. If I edited the code to allow a second space, words that DID NOT 
+    have a punctuation had two spaces.
+
+Brief Description:
+    The general idea of my code is to go character by character and process it individually. Then, when I reach the max line
+    length I would go back and look at the line holistically to see where I should include my \n. The caviat is that there are 
+    many different outcomes, like punctuation or spaces at the end of lines that make my code more messy.
+
+    I had 4 helper functions:
+        1. rotateLeft. This function takes the start and end index of the array and rotates everything left once. I never want to
+            rotate the entire array, so it is essential to have the start index. The end index is to know how long to loop.
+        2. rotateRight. This function is the same as rotateLeft but the opposite direction. This is useful for inserting characters
+            at a certain location in my array without having to replace an important character.
+        3. findLastSpace. This function loops backwards from the end of my array until it finds a space. This is essential because
+            sometimes I incorrectly put a space after punctuation, and when I correct it I need to adjust my space tracker.
+        4. isTargetPunc. This function returns true if the given character is a '.' '?' '!' or ':'. The specs clarify that these
+            are the only puncutation to be treated specially, so this function saves me code redundancy and compactness.
+
+    In terms of the actual render function it follows this pseuedocode:
+        
+        declare variables to track characters and indexes
+        while my infile has more characters continue looping
+            if my character is @ and the last three were ' ' '@' 'P'
+                input a paragraph break and reset variables
+            else if the number of chars on the line is = to the lineLength max 
+                if the current character is whitespace
+                    if the character before this is a space
+                        replace the character before this with a \n
+                    otherwise
+                        put a \n at the end of line
+                if the current char is a special punctuation
+                    if the last breakable point was a double space
+                        replace the first space with \n and rotate line left
+                        put a space after the char 
+                    else if the last breakable point was a single space
+                        replace that single space with a \n
+                        put a space after the char
+                    else (must be a hyphen)
+                        rotate the array right once after the hyphen insert a \n in the open spot
+                        put a space after the char
+                else(it is a normal char)
+                    if their has been no spaces or hyphens
+                        record so in a boolean for later and break the word in half by putting a \need
+                    if the last breakable spot was a double space 
+                        change the first one to a \n and rotate the array left once.
+                    else if the last breakable point was a single space
+                        replace this space with a \n
+                    else (must be a hyphen)
+                        rotate the array right once after the hyphen insert a \n in the open spot
+            else if the number of chars on the line is > lineLength max
+                replace the last char on line with \n 
+                if the current char is not a space
+                    add the current char to the end of line after the \n
+                if it is a space
+                    do nothing with the current char 
+            otherwise
+                if the current char is a punctuation
+                    if the last 2 characters were just a punctuation and a space
+                        replace the last space with the current punctuation
+                    otherwise
+                        add the punctuation to end of line and add a space after that
+                if the current char is a space
+                    if there was just a paragraph break
+                        ignore the space and go to the next char
+                    if characters spilled over to the new output line and my line cstring is empty
+                        add a space to the end of line
+                    if there are no characters on the output line
+                        do not add the space to the end of line
+                    if the last char was a space
+                        if the char before that was a special punctuation
+                            add the space
+                        if not
+                            do not add the space
+                    otherwise
+                        add the space
+                else
+                    if the char is a hyphen
+                        record so on the tracker and continue normally
+                    if this is not the first char to be added to the line cstring
+                        if the char 2 elements ago is a target punctuation
+                            if the last char was a space 
+                                replace that space with the current target punctuation
+                                use helper function findLastSpace to track the last space
+                            otherwise
+                                put the current punctuation at the current index
+                        if not a special punctuation
+                            add the current char to the end of line
+                    else
+                        add the current char to the end of the line
+            if this is the 3rd or more char
+                store the last 3 chars
+            if this is the 2nd char
+                store the last 2 chars
+            if this is the first char
+                store this char
+        
+        print the last line, ignoring the trailing spaces
+
+        if a word has been broken in half
+            return 1
+        return 0
+                
+
+Test cases:
+    
