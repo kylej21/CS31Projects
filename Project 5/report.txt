@@ -116,4 +116,57 @@ Brief Description:
                 
 
 Test cases:
+    follows the below format
+    case # | (text,lineLength) | (expected output, returnVal) | why
+    ------------------------------------------------------
+    1. ("Kyle. Johnson was here.",1) | ("K\ny\nl\ne\n.\nJ\no\nh\nn\ns\no\nn\nw\na\ns\nh\ne\nr\ne\n.\n",1) | checks broken words return properly
+    2. ("Kyle. John\nKyle: John\nKyle? John\nKyle! John",15) | ("Kyle.  John\nKyle?  John\nKyle!  John\nKyle:  John\n",0) | checks all special punctuation
+    3. ("Kyle. Johnson",5) | ("Kyle.\nJohns\non\n",1) | checks that there is no extra space after punctuation at end of line
+    4. ("Kyle @P@ Johnson", 15) | ("Kyle\n\nJohnson\n",0) | checks paragraph breaks work properly
+    5. ("Kyle... Johnson", 15) | ("Kyle...\nJohnson\n",0) | checks that consecutive punctuation works correctly
+    6. ("Mr.Johnson", 15) | ("Mr.Johnson\n",0) | checks that punctuation that does not end a word segment works properly
+    7. ("Hello  my name is  Kyle",25) |("Hello my name is Kyle\n",0) | checks that double spaces do not get processed twice
+    8. ("1234123412341234",4) | ("1234\n1234\n1234\n1234\n",1) | checks that words with no spaces longer than length still get processed correctly
+    9. ("12341234-12341234",10) | ("12341234-\n12341234\n",0) | checks that hyphens work in general
+    10. ("Hello kyle-johnson",10) | ("Hello kyle-\njohnson\n",0) | checks that hyphens after spaces work
+    11. ("kyle-johnson hello",13) | ("kyle-johnson\nhello\n",0) | checks that spaces after hyphens work
+    12. ("Kyle\n",4) |("Kyle\n",0) | checks that ending \n work properly
+    13. ("Kyle Johnson",0) | (N/A,2) | checks for invalid lineLength parameter
+    14. ("Doctor Smallberg",10) | ("Doctor\nSmallberg\n") | checks that line is split even when current char is nonspace.
+    15. ("cotton--candy",7) | ("cotton-\n-candy\n",0) | checks that the first hyphen in a double hyphen works
+    16. ("cotton--candy",8) | ("cotton--\ncandy\n",0) | checks that the second hyphen in a double hyphen works
+    17. ("Kyle.\n",5) | ("Kyle.\n",0) | checks correct ending when line ends with punctuation and there are no more chars
+    18. ("Kyle\n\n\n",10) | ("Kyle\n",0) checks that extra whitespace is not processed
+    19. ("Kyle... Johnson\n",20) |("Kyle...  Johnson") | Checks that consecutive punctuation on one line works correctly. (2 spaces)
+    20. (" kyle j",10) | ("kyle j\n",0) | checks that leading spaces are not printed for my code
+    21. ("\nkyle j",10) | ("kyle j\n",0) | checks that leading newLine characters are not printed
+    22. ("Kyle\tJ",10) | ("Kyle j\n",0) | checks that tabs are replaced with spaces
+    23. ("\tKyle J",10) | ("kyle J\n",0) | checks that leading tabs are ignored
+    24. ("",10) | ("",0) | checks that empty files do not get processed
+    More tests:
+       
+       The input...
+       
+        It always does seem to me that I am doing more work than
+        I should do. It is not that I object to the work, mind you;
+        I like work: it fascinates me.       I can sit and look at it for hours.
+        I love to keep     it by me: the idea of getting
+        rid
+        of it nearly breaks my heart. @P@ You cannot give me too
+        much work; to accumulate work has almost become
+
+
+        a passion with me: my study is so full of it now, that there is hardly
+        an inch of room for any more.
+
+        ... is tested with lineLength 40-50. This tests various line endings, whitespace handling, and @P@ code. It also tests
+            for a little bit larger input length.
     
+    
+    Fails:
+    ("kyle...",7) ending ... at perfect lineLength ending
+    ("kyle...",5) wrong return code when ... split in half
+    ("Kyle @P@ @P@ was here", 30) back to back @P@ should only have one paragraph break
+    ("1234-1234-1234",2) when words after the - are broken it breaks 
+    ("Kyle @P@L hello",25) @P@ is not a word segment but my code still paragraph breaks
+    ("Hello @P@ world",5) fails when @P@ starts the line 

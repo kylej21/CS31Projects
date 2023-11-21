@@ -410,8 +410,16 @@ int render(int lineLength, istream& inf, ostream& outf){
     
     // printing the last line. Since the while loop goes until there are no more chars I still need to print the last line 
 
-    //checks if the last chars are spaces so that I do not have any spaces at the end of the output.
-    if(line[iterator-1]==' ' && line[iterator-2]==' '){
+    //checks if the last chars are spaces or \n so that I do not have any spaces at the end of the output.
+    
+    if(strcmp(line,"\n")==0){
+        // do nothing    
+    }
+    // checks for double space
+    else if(strcmp(line,"")==0){
+        //do nothing
+    }
+    else if(line[iterator-1]==' ' && line[iterator-2]==' '){
         for(int i=0;i<iterator-2;i++){
             outf<<line[i];
         }
