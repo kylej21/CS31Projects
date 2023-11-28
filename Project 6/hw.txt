@@ -61,7 +61,9 @@ Below are my solutions to the "problems" for proj 6
     e.
         The program is incorrect because it is not modifying the values at the correct memory adress, aka the elements of the array
         that ptr points to are not correct. This is causing our valeus that are output to be incorrect, and the initial element is 
-        for some reason the first element of junk instead of 100. 
+        for some reason the first element of junk instead of 100. The problem is that we are trying to return a pointer to a local 
+        array, which when the function ends gets deallocated from memory. Then the main function is trying to access deallocated array
+        memory.
 2. 
     a. double* cat;
     b. double mouse[5];
