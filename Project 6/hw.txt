@@ -63,7 +63,9 @@ Below are my solutions to the "problems" for proj 6
         that ptr points to are not correct. This is causing our valeus that are output to be incorrect, and the initial element is 
         for some reason the first element of junk instead of 100. The problem is that we are trying to return a pointer to a local 
         array, which when the function ends gets deallocated from memory. Then the main function is trying to access deallocated array
-        memory.
+        memory. I believe this is why the first element output is a junk value. Since the memory is deallocated, the compiler is allowed
+        to write over the values we previously had at that memory adress, so junk replaces the old array values we had from the local
+        function.
 2. 
     a. double* cat;
     b. double mouse[5];
@@ -101,7 +103,7 @@ Below are my solutions to the "problems" for proj 6
     c. 
         const char* findTheChar(const char* str, char chr)
         {
-            while(str!='\0'){
+            while((*str)!='\0'){
                 if (*(str) == chr)
                     return str;
                 str++;
@@ -145,10 +147,10 @@ Below are my solutions to the "problems" for proj 6
         ptr is from the sixth element. Since ptr currently points to the third element, the output value is 3 (6-3).
     8.  line 8 calls swap1 with the memory adresses of the first and second array elements. Then it tries to swap the adresses, which does nothing.
     9.  line 9 calls swap2, with a pointer to array and a memory adress for the third element of the array. Swap1 actually swaps the values that 
-        the pointer parameters point to. *array auto points to element 0 so it swaps the first and third elements. -> {4,3,-1,9,22,19}
+        the pointer parameters point to. *array auto points to element 0 so it swaps the first and third elements. -> {4,79,-1,9,22,19}
 10/11.  Lines 10 and 11 loop through array and PRINT out all of its elements on their own lines.
     Total prints:
-        3 from line 7, then 4,3,-1,9,22,19 from iterating through array.
+        3 from line 7, then 4,79,-1,9,22,19 from iterating through array.
 5.
     void removeS(char* c){
         char* char2=c;
