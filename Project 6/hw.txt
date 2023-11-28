@@ -1,0 +1,161 @@
+Kyle Johnson
+
+Project 6 Part 2
+
+Below are my solutions to the "problems" for proj 6
+
+1.
+    a.         
+        int main()
+        {
+            int arr[3] = { 5, 10, 15 };
+            int* ptr = arr;
+
+            *ptr = 10;
+            ptr++;          // set arr[0] to 30
+            *ptr  = 20;      // set arr[1] to 20
+            ptr ++;
+            *ptr = 30;        // set arr[2] to 10
+            ptr++;
+            while (ptr > arr)
+            {
+                ptr--;
+                cout << *ptr << endl;    // print values
+            }
+        }
+    b. 
+        This function doesn't work because the parameter for the pointer is not a reference variable, so it does not get updated
+        in the main function when FindMax changes it
+
+        fix:  void findMax(int arr[], int n, int* &pToMax) <- & before the pToMax
+    c.
+        This function may not work because the initialized pointer is null. Fixed by creating an int and having the pointer
+        point to the int.
+
+        fix: 
+            int main()
+            {
+                int x=0;
+                int* ptr=&x;
+                computeCube(5, ptr);
+                cout << "Five cubed is " << *ptr << endl;
+                return 0;
+            }
+    d. 
+        The c string parameters are automatically passed as pointers. Since the code wants to look at individual characters
+        one at a time, we need to compare the pointers char at a certain index instead of just str1 vs str2. We can still 
+        iterate throught the chars how the program intended, but we must look at the current index.
+
+        fix:
+        bool strequal(const char str1[], const char str2[])
+        {
+            while (str1[0] != 0  &&  str2[0] != 0)  // zero bytes at ends
+            {
+                if (str1[0] != str2[0])  // compare corresponding characters
+                    return false;
+                str1++;            // advance to the next character
+                str2++;
+            }
+            return true;   // both ended at same time?
+        }
+    e.
+        The program is incorrect because it is not modifying the values at the correct memory adress, aka the elements of the array
+        that ptr points to are not correct. This is causing our valeus that are output to be incorrect, and the initial element is 
+        for some reason the first element of junk instead of 100. 
+2. 
+    a. double* cat;
+    b. double mouse[5];
+    c. cat = &mouse[4];
+    d. *cat= 25;
+    e. *(mouse+3)=17;
+    f. cat-=3;
+    g. cat[1]=42;
+    h. cat[0]=54;
+    i. bool b = (cat==&mouse[0]);
+    j. bool b = *cat==*(cat+1);
+3. 
+    a. 
+        double mean(const double* scores, int numScores)
+        {
+            const double* ptr = scores;
+            double tot = 0;
+            int i=0;
+            while (i !=  numScores)
+            {
+                tot += *(ptr+i);
+                i++;
+            }
+            return tot/numScores;
+        }
+    b.
+        const char* findTheChar(const char* str, char chr)
+        {
+            for (int k = 0; *(str+k) != 0; k++)
+                if (*(str+k) == chr)
+                    return str+k;
+
+            return nullptr;
+        }
+    c. 
+        const char* findTheChar(const char* str, char chr)
+        {
+            while(str!='\0'){
+                if (*(str) == chr)
+                    return str;
+                str++;
+            }
+            return nullptr;
+        }
+4. 
+    Explanation: I numbered each relevant line and will explain per line what it does after the program.
+    
+    int main()
+    {
+    
+    1       int array[6] = { 5, 3, 4, 17, 22, 19 };
+
+    2       int* ptr = maxwell(array, &array[2]);
+    3       *ptr = -1;
+    4       ptr += 2;
+    5       ptr[1] = 9;
+    6       *(array+1) = 79;
+
+    7      cout << &array[5] - ptr << endl;
+
+    8       swap1(&array[0], &array[1]);
+    9       swap2(array, &array[2]);
+
+    10      for (int i = 0; i < 6; i++)
+    11          cout << array[i] << endl;
+    
+    }
+
+    Per line explanation:
+    1.  The first line initializes the array with 6 starter elements
+    2.  line 2 creates a pointer ptr that points to the max value between the first and third element in array,
+        which in this case is 5 vs 4. Therefore ptr points to the first element of array, 5. 
+    3.  line 3 changes the value that ptr points to into -1. Now array[0] is -1 instead of 5. -> {-1,3,4,17,22,19}
+    4.  line 4 iterates the pointer up 2 elements. Now ptr points at the third element of array.
+    5.  line 5 sets the element after the one pointed to by pointer into 9. AKA, the fourth element of array is 9. -> {-1,3,4,9,22,19}
+    6.  line 6 changes the value of the second element of array to 79. *array would point to the first element, so *(array+1) 
+        points to the second. -> {-1,79,4,9,22,19}
+    7.  Line 7 PRINTS the difference of array[5] - ptr. Since these are both adresses the difference will be how many elements away
+        ptr is from the sixth element. Since ptr currently points to the third element, the output value is 3 (6-3).
+    8.  line 8 calls swap1 with the memory adresses of the first and second array elements. Then it tries to swap the adresses, which does nothing.
+    9.  line 9 calls swap2, with a pointer to array and a memory adress for the third element of the array. Swap1 actually swaps the values that 
+        the pointer parameters point to. *array auto points to element 0 so it swaps the first and third elements. -> {4,3,-1,9,22,19}
+10/11.  Lines 10 and 11 loop through array and PRINT out all of its elements on their own lines.
+    Total prints:
+        3 from line 7, then 4,3,-1,9,22,19 from iterating through array.
+5.
+    void removeS(char* c){
+        char* char2=c;
+        while(*c!='\0'){
+            if(!(*c=='S'||*c=='s')){
+                *char2=*c;
+                char2++;
+            }
+            c++;
+        }
+        *char2='\0';
+    };
