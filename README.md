@@ -9,8 +9,10 @@ Not to be used for copying or to solve anyone elses assignments.
 |    3     |  95/100  |
 |    4     |  99/100  |
 |    5     |   N/A    |
+|    6     |   N/A    |
+|    7     |   N/A    |
 
 | Exams | Score |
 |-------| ----- |
 | Midterm 1 | 100/100 | 
- 
+ | Midterm 2 | 90/100 |
