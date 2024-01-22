@@ -8,9 +8,9 @@ Not to be used for copying or to solve anyone elses assignments.
 |    2     |  100/100  |
 |    3     |  95/100  |
 |    4     |  99/100  |
-|    5     |   N/A    |
+|    5     |   88/100    |
 |    6     |   96/100    |
-|    7     |   N/A    |
+|    7     |   93/100    |
 
 | Exams | Score |
 |-------| ----- |
